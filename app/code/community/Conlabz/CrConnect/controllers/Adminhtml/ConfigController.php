@@ -40,7 +40,7 @@ class Conlabz_Crconnect_Adminhtml_ConfigController extends Mage_Adminhtml_Contro
     
     public function getGroupsBlockAction(){
         
-        echo Mage::app()->getLayout()->createBlock('crconnect/config_groupsapis')->toHtml();
+        echo Mage::app()->getLayout()->createBlock('crconnect/config_groupsApis')->toHtml();
         
     }
     protected function _isAllowed(){

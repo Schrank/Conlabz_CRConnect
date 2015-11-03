@@ -5,7 +5,7 @@
             <action method="addItem"><type>skin_js</type><name>js/crconnect.js</name><params/></action>
         </reference>
         <reference name="root">
-            <block type="core/template" name="crconnect_header" output="toHtml">
+            <block type="adminhtml/template" name="crconnect_header" output="toHtml">
                 <action method="setTemplate"><template>crconnect/config/header.phtml</template></action>
             </block>
         </reference>

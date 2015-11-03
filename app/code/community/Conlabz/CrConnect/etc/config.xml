@@ -6,7 +6,7 @@
         </Conlabz_CrConnect>
     </modules>
     <global>
-	<helpers>
+        <helpers>
             <crconnect>
                 <class>Conlabz_CrConnect_Helper</class>
             </crconnect>
@@ -31,7 +31,7 @@
                     <subscriber>Conlabz_CrConnect_Model_Newsletter_Subscriber</subscriber>
                 </rewrite>
             </newsletter>
-    	</models>
+        </models>
         <events>
             <controller_front_init_before>
                 <observers>
@@ -50,7 +50,7 @@
                         <method>trackingCodesSet</method>
                     </crconnect_customer_session_init>
                 </observers>
-            </customer_session_init> 
+            </customer_session_init>
             <checkout_onepage_controller_success_action>
                 <observers>
                     <crconnect_checkout_onepage_controller_success_action>
@@ -59,7 +59,7 @@
                         <method>checkoutSuccess</method>
                     </crconnect_checkout_onepage_controller_success_action>
                 </observers>
-            </checkout_onepage_controller_success_action>   
+            </checkout_onepage_controller_success_action>
             <sales_order_place_after>
                 <observers>
                     <crconnect_sales_order_place_after>
@@ -77,16 +77,16 @@
                         <method>customerDeleted</method>
                     </crconnect_customer_delete_before>
                 </observers>
-            </customer_delete_before> 
+            </customer_delete_before>
             <customer_save_after>
                 <observers>
-                     <crconnect_adminhtml_customer_save_after> 
-                         <type>singleton</type>
-                         <class>crconnect/observer</class>
-                         <method>customerSaveAfter</method>
-                     </crconnect_adminhtml_customer_save_after> 
+                    <crconnect_adminhtml_customer_save_after>
+                        <type>singleton</type>
+                        <class>crconnect/observer</class>
+                        <method>customerSaveAfter</method>
+                    </crconnect_adminhtml_customer_save_after>
                 </observers>
-            </customer_save_after>     
+            </customer_save_after>
         </events>
     </global>
     <adminhtml>
@@ -114,13 +114,13 @@
                         <method>initCleverReach</method>
                     </catalogindex>
                 </observers>
-            </admin_system_config_changed_section_crroot>    
+            </admin_system_config_changed_section_crroot>
             <controller_action_postdispatch_adminhtml_system_config_save>
                 <observers>
                     <check_forms_ids>
                         <type>singleton</type>
                         <class>crconnect/observer</class>
-                        <method>configSave</method> 
+                        <method>configSave</method>
                     </check_forms_ids>
                 </observers>
             </controller_action_postdispatch_adminhtml_system_config_save>
@@ -128,15 +128,15 @@
     </adminhtml>
     <admin>
         <routers>
-            <crconnect>
-                <use>admin</use>
+            <adminhtml>
                 <args>
-                    <module>Conlabz_CrConnect</module>
-                    <frontName>crconnect</frontName>
+                    <modules>
+                        <conlabz_crconnect after="Mage_Adminhtml">Conlabz_CrConnect_Adminhtml</conlabz_crconnect>
+                    </modules>
                 </args>
-            </crconnect>
+            </adminhtml>
         </routers>
-    </admin>    
+    </admin>
     <frontend>
         <translate>
             <modules>

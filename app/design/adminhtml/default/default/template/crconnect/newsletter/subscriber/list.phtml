@@ -1,7 +1,7 @@
 <script>
 function synchronizeData(){
 	
-    var url = '<?php echo $this->getUrl("crconnect/adminhtml_crconnect/synchronize")?>id/';
+    var url = '<?php echo $this->getUrl("admin/crconnect/synchronize")?>id/';
     new Ajax.Request(url, {
         method: 'post',
         onSuccess: function(transport) {
