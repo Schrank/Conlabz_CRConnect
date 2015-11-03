@@ -1,0 +1,19 @@
+<script>
+    var baseConfirmKeyUrl = "<?php echo $this->getUrl("crconnect/adminhtml_config/confirmKey")?>";
+    var baseChangeGroupUrl = "<?php echo $this->getUrl("crconnect/adminhtml_config/changeGroup")?>";
+    var baseGroupsBlockUrl = "<?php echo $this->getUrl("crconnect/adminhtml_config/getGroupsBlock")?>";
+    
+    var savedDefaultListId = "<?php echo Mage::helper("crconnect")->getDefaultListId();?>";
+    var savedDefaultFormId = "<?php echo Mage::helper("crconnect")->getDefaultFormId();?>";
+    var savedFormsKeys = new Array();
+    <?php foreach (Mage::helper("crconnect")->getFormsIdsByKeys() as $key=>$formKey):?>
+    savedFormsKeys[<?php echo "'" . $key . "'";?>] = "<?php echo $formKey;?>";
+    <?php endforeach;?>
+    
+    var crconnectLang = new Array();
+    crconnectLang['please:select:group:default'] = "<?php echo Mage::helper("crconnect")->__("No groups to select")?>";
+    crconnectLang['please:select:form:default'] = "<?php echo Mage::helper("crconnect")->__("No forms to select")?>";
+    crconnectLang['please:select:group'] = "<?php echo Mage::helper("crconnect")->__("Please select subscribers group")?>";
+    crconnectLang['please:select:form'] = "<?php echo Mage::helper("crconnect")->__("Please select form")?>";
+
+</script>    

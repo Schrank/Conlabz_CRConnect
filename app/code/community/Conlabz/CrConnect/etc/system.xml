@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+    	<crroot translate="label" module="crconnect">
+            <class>separator-top</class>
+            <label>CleverReach Connect</label>
+            <tab>customer</tab>
+            <sort_order>110</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+        	<groups>
+                    <crconnect translate="label">
+                        <label>CleverReach Settings</label>
+                        <frontend_type>text</frontend_type>
+                        <comment><![CDATA[The CleverReach plugin will synchronize all subscriptions and orders with your account.]]></comment>
+                        <sort_order>0</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+                        <fields>
+                            <api_key translate="label">
+                                <label>API Key</label>
+                                <frontend_model>crconnect/config_key</frontend_model>
+                                <frontend_type>text</frontend_type>
+                                <sort_order>1</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                                <comment>This can be found on your Listsettings page in CleverReach.</comment>
+                            </api_key>
+                            <list_id translate="label">
+                                <label>General Subscribers List ID</label>
+                                <frontend_type>select</frontend_type>
+                                <source_model>crconnect/system_config_source_emptyList</source_model>
+                                <sort_order>2</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                                <comment>Magento users who subscribe/unsubscribe to the newsletter will be added/removed from this CleverReach receiver list.</comment>
+                            </list_id>
+                            <form_id translate="label">
+                                <label>CleverReach Form ID</label>
+                                <frontend_type>select</frontend_type>
+                                <source_model>crconnect/system_config_source_emptyForms</source_model>
+                                <sort_order>3</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                                <comment>Create new Form in your CleverReach backend, if you want to use Double Opt-in</comment>
+                            </form_id>
+                            
+                            
+                            <confirm_newsletter_logged translate="label">
+                                <label>Enable Double Opt-in</label>
+                                <frontend_type>select</frontend_type>
+                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                <sort_order>20</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                            </confirm_newsletter_logged>
+                            <sync_orders translate="label">
+                                <label>Enable Orders Tracking</label>
+                                <frontend_type>select</frontend_type>
+                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                <sort_order>5</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                                <comment>Sync sales with CleverReach. Required for ordertracking. Note: this will currently NOT work with the Multishipping Checkout</comment>
+                            </sync_orders>
+                            <sync_orders_emails translate="label">
+                                <label>Force synchronization of order Email addresses</label>
+                                <frontend_type>select</frontend_type>
+                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                <sort_order>6</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                                <comment>Emails from customers orders will be synchronized with CleverReach (even if they are not subscribed)</comment>
+                            </sync_orders_emails>
+                            <m2e_sync translate="label">
+                                <label>Enable M2E compatibility</label>
+                                <frontend_type>select</frontend_type>
+                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                <sort_order>7</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                                <comment>Exclude eBay/Amazon orders from force synchronization</comment>
+                                <depends><sync_orders_emails>1</sync_orders_emails></depends>
+                            </m2e_sync>
+                            <auto_separate translate="label">
+                                <label>Separate customers by groups automatically</label>
+                                <frontend_type>select</frontend_type>
+                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                <sort_order>15</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                                <comment>During customers synchronization, they will be inserted in associated CleverReach groups lists</comment>
+                            </auto_separate>
+                            <groups_keys translate="comment">
+                                <label>API keys for user groups</label>
+                                <frontend_model>crconnect/config_groupsApis</frontend_model>
+                                <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                                <sort_order>25</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                                <comment></comment>
+                            </groups_keys>
+                            <showgroup translate="comment">
+                                <label>Hide 'General' subscription for groups</label>
+                                <frontend_type>select</frontend_type>
+                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                <sort_order>30</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                                <comment>If 'No' - then not 'General' user group users, will have possibility to subscribe for both: 'General' and '% Group' newsletter. If 'Yes' - just to '% Groups' newsletter</comment>
+                            </showgroup>
+                        </fields>
+                    </crconnect>
+                    <csconnect_search>
+                        <label>CleverReach Search Settings</label>
+                        <frontend_type>text</frontend_type>
+                        <sort_order>2</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+                        <fields>
+                            <feed_url translate="label comment"> 
+                                <label>Feed-URL</label>
+                                <frontend_model>crconnect/config_url</frontend_model>
+                                <sort_order>1</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                                <comment>Copy this Feed-URL to your CleverReach account. Store Id is optional parameter, add it in case, if you want use feed for other stores</comment>
+                            </feed_url>
+                            <password translate="label comment">
+                                <label>Password</label>
+                                <frontend_type>password</frontend_type>
+                                <sort_order>1</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                                <comment>Create your own password for CleverReach feed</comment>
+                            </password>
+                        </fields>
+                    </csconnect_search>
+        	</groups>
+        </crroot>
+    </sections>
+</config>

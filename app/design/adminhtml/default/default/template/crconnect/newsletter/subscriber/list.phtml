@@ -1,0 +1,160 @@
+<script>
+function synchronizeData(){
+	
+    var url = '<?php echo $this->getUrl("crconnect/adminhtml_crconnect/synchronize")?>id/';
+    new Ajax.Request(url, {
+        method: 'post',
+        onSuccess: function(transport) {
+            editData = transport.responseText.evalJSON(true);
+            if (editData.error == false){
+                $("success-messages").show();
+                $("success-messages-content").innerHTML = editData.message;
+            }else{
+                $("error-messages").show();
+                $("error-messages-content").innerHTML = editData.message;
+            }
+            scroll(0,0);
+            document.location.assign("<?php echo $this->getUrl("*/*/")?>");
+        }
+    });
+
+}
+</script>
+<style>
+    .overview tr td:first-child {
+        width: 250px;
+    }
+</style>
+<?php $info = $this->getSubscribersListData(); ?>
+<div id="error-messages" <?php if (sizeof($info['error']) == 0): ?>style="display:none"<?php endif; ?>><ul class="messages"><li class="error-msg"><ul><li id="error-messages-content"><?php echo implode("<br />", $info['error'])?></li></ul></li></ul></div>
+<div id="success-messages" style="display:none"><ul class="messages"><li class="success-msg"><ul><li id="success-messages-content"></li></ul></li></ul></div>
+<div class="content-header">
+    <table cellspacing="0">
+	<tr>
+            <td style="width: 50%;">
+                <h3><?php echo Mage::helper('newsletter')->__('Newsletter Subscribers') ?></h3>
+            </td>
+            <td align="right"><img src="<?php echo $this->getSkinUrl('images/cleverreach/cleverreach-logo.png')?>" alt="" /></td>
+	</tr>
+    </table>
+</div>
+<?php if (sizeof($info['error']) == 0): ?>
+    <p><?php echo Mage::helper("crconnect")->__('Magento subscribers list has been deactivated since deactivation will most likly happen in Cleverreach.')?>
+    <br /><?php echo Mage::helper("crconnect")->__('Please use your Cleverreach account to activate/deactivate your subscribers.')?></p>
+
+    <?php if(isset($info['info']) && isset($info['info']['client'])): ?>
+    <div class="entry-edit">
+        <div class="entry-edit-head"><h4 class="icon-head head-customer-view"><?php echo Mage::helper("crconnect")->__('CleverReach Connect general information');?></h4></div>
+        <fieldset>
+            <table class="box-left" cellspacing="2">
+                <tbody>
+                <tr>
+                    <td><strong><?php echo Mage::helper("crconnect")->__('CleverReach client ID')?>:</strong></td>
+                    <td><?php echo $info['info']['client']->id?></td>
+                </tr>
+                <tr>
+                    <td><strong><?php echo Mage::helper("crconnect")->__('Name')?></strong></td>
+                    <td><?php echo $info['info']['client']->firstname?> <?php echo $info['info']['client']->name?></td>
+                </tr>
+                <tr>
+                    <td><strong><?php echo Mage::helper("crconnect")->__('Company');?></strong></td>
+                    <td><?php echo $info['info']['client']->company?></td>
+                </tr>
+                <tr>
+                    <td><strong><?php echo Mage::helper("crconnect")->__('E-Mail')?></strong></td>
+                    <td><?php echo $info['info']['client']->email?></td>
+                </tr>
+                <tr>
+                    <td><strong><?php echo Mage::helper("crconnect")->__('Active Subscribers in Magento system')?></strong></td>
+                    <td><?php echo $info['info']['actvie_subscribers']?></td>
+                </tr>
+                <tr>
+                    <td><strong><?php echo Mage::helper("crconnect")->__('Inactive Subscribers in Magento system')?></strong></td>
+                    <td><?php echo $info['info']['inactive_subscribers']?></td>
+                </tr>
+            </tbody></table>
+            <div class="box-right">
+                <strong><?php echo Mage::helper("crconnect")->__('Login')?></strong><br />
+                <a href="http://<?php echo $info['info']['client']->login_domain?>/admin/" target="_blank"><b><?php echo Mage::helper("crconnect")->__('Cleaverreach login');?></b></a>
+             </div>
+        </fieldset>
+    </div>
+    <?php endif; ?>
+
+    <?php if(isset($info['info']) && isset($info['info']['list']) && $info['info']['list']): ?>
+    <div class="entry-edit overview">
+        <div class="entry-edit-head"><h4 class="icon-head head-customer-view"><?php echo Mage::helper("crconnect")->__('CleverReach Connect General list information')?></h4></div>
+        <fieldset>
+            <table class="box-left" cellspacing="2">
+                <tbody>
+                <tr>
+                    <td><strong><?php echo Mage::helper("crconnect")->__('List name')?></strong></td>
+                    <td><?php echo $info['info']['list']->name?></td>
+                </tr>
+                <tr>
+                    <td><strong><?php echo Mage::helper("crconnect")->__('Last mailing')?></strong></td>
+                    <td><?php if (isset($info['info']['list']->last_mailing)):?><?php echo date("r", @$info['info']['list']->last_mailing)?><?php else:?><b><font color="red"><?php echo Mage::helper("crconnect")->__('Never Sent');?></font></b><?php endif;?></td>
+                </tr>
+            </tbody></table>
+            <table class="box-right" cellspacing="2">
+                <tbody>
+                    <tr>
+                        <td><strong><?php echo Mage::helper("crconnect")->__('Active receivers')?></strong></td>
+                        <td><?php echo $info['info']['list']->active?></td>
+                    </tr>
+                    <tr>
+                        <td><strong><?php echo Mage::helper("crconnect")->__('Inactive receivers')?></strong></td>
+                        <td><?php echo $info['info']['list']->inactive?></td>
+                    </tr>
+                    <tr>
+                        <td><strong><?php echo Mage::helper("crconnect")->__('Total receivers');?></strong></td>
+                        <td><?php echo $info['info']['list']->total?></td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+    <?php endif; ?>
+    <?php if(isset($info['info']) && isset($info['info']['groups']) && is_array($info['info']['groups']) && sizeof($info['info']['groups']) > 0): ?>
+        <?php foreach ($info['info']['groups'] as $group):?>
+            <div class="entry-edit overview">
+                <div class="entry-edit-head"><h4 class="icon-head head-customer-view"><?php echo $group->name?></h4></div>
+                <fieldset>
+                    <table class="box-left" cellspacing="2">
+                        <tbody>
+                        <tr>
+                            <td><strong><?php echo Mage::helper("crconnect")->__('List name')?></strong></td>
+                            <td><?php echo $group->name?></td>
+                        </tr>
+                        <tr>
+                            <td><strong><?php echo Mage::helper("crconnect")->__('Last mailing')?></strong></td>
+                            <td><?php if (isset($group->last_mailing)):?><?php echo date("r", @$group->last_mailing)?><?php else:?><b><font color="red"><?php echo Mage::helper("crconnect")->__('Never Sent');?></font></b><?php endif;?></td>
+                        </tr>
+                    </tbody></table>
+                    <table class="box-right" cellspacing="2">
+                        <tbody>
+                            <tr>
+                                <td><strong><?php echo Mage::helper("crconnect")->__('Active receivers')?></strong></td>
+                                <td><?php echo $group->active?></td>
+                            </tr>
+                            <tr>
+                                <td><strong><?php echo Mage::helper("crconnect")->__('Inactive receivers')?></strong></td>
+                                <td><?php echo $group->inactive?></td>
+                            </tr>
+                            <tr>
+                                <td><strong><?php echo Mage::helper("crconnect")->__('Total receivers');?></strong></td>
+                                <td><?php echo $group->total?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+        <?php endforeach;?>
+    <?php endif; ?>
+    <div id="cr_import">
+        <button type="button" class="scalable" onclick="synchronizeData()" style=""><span><span><span><?php echo Mage::helper("crconnect")->__('Synchronize data with CleverReach')?></span></span></span></button>
+        &nbsp;&nbsp;&nbsp;&nbsp;<?php echo Mage::helper("crconnect")->__('Warning: Please wait untill the synchronization is finished. Depending on the amount of data this might take a while.')?>
+    </div>
+<?php else:?>
+    <button type="button" class="scalable" onclick="document.location.assign('<?php echo $this->getUrl('adminhtml/system_config/edit', array('section'=>'crroot'))?>')" style=""><span><span><span><?php echo Mage::helper("crconnect")->__('CleverReach extension configuration')?></span></span></span></button>
+<?php endif; ?>

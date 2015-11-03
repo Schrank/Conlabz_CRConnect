@@ -1,0 +1,48 @@
+<?php
+// Get Groupd Id and group name of user
+$groupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+$groupName = Mage::getModel('customer/group')->load($groupId)->getCode();
+
+$isDefaultSubscribed = Mage::getModel('crconnect/newsletter_subscriber')->isSubscribed();
+$isCustomSubscribed = Mage::getModel('crconnect/newsletter_subscriber')->isSubscribed($groupId);
+?>
+<div class="col2-set">
+    <div class="col-1">
+        <div class="box">
+            <div class="box-title">
+                <h3><?php echo $this->__('Contact Information') ?></h3>
+                <a href="<?php echo $this->getUrl('customer/account/edit') ?>"><?php echo $this->__('Edit') ?></a>
+            </div>
+            <div class="box-content">
+                <p>
+                    <?php echo $this->htmlEscape($this->getCustomer()->getName()) ?><br />
+                    <?php echo $this->htmlEscape($this->getCustomer()->getEmail()) ?><br />
+                    <a href="<?php echo $this->getChangePasswordUrl() ?>"><?php echo $this->__('Change Password') ?></a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <?php if( $this->isNewsletterEnabled() ): ?>
+    <div class="col-2">
+        <div class="box">
+            <div class="box-title">
+                <h3><?php echo $this->__('Newsletters') ?></h3>
+                <a href="<?php echo $this->getUrl('newsletter/manage') ?>"><?php echo $this->__('Edit') ?></a>
+            </div>
+            <div class="box-content">
+                <p>
+                    <?php if( $isDefaultSubscribed ): ?>
+                        <?php echo Mage::helper('crconnect')->__("You are currently subscribed to 'General Subscription'") ?><br>
+                    <?php endif; ?>
+                    <?php if( $isCustomSubscribed && $groupId > 1): ?>
+                        <?php echo Mage::helper('crconnect')->__("You are currently subscribed to '%s Subscription'", $groupName) ?><br>
+                    <?php endif; ?>
+                    <?php if( !$isDefaultSubscribed && !$isCustomSubscribed ): ?>
+                        <?php echo $this->__('You are currently not subscribed to any newsletter.') ?>
+                    <?php endif; ?>
+                </p>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+</div>

@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <crroot translate="title" module="crconnect">
+                                        <title>Cleverreach Settings</title>
+                                        <sort_order>50</sort_order>
+                                    </crroot>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

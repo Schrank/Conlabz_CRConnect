@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Conlabz_CrConnect>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Conlabz_CrConnect>
+    </modules>
+</config> 
