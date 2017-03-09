@@ -326,7 +326,7 @@ class Conlabz_CrConnect_Model_Api extends Mage_Core_Model_Abstract {
     public function receiverAddOrder($email, $orderInfo){
         
         $listId = $this->_helper->getDefaultListId();
-        $result = $this->_client->receiverAddOrder($this->_apiKey, $listId, $email, $orderInfo);
+        $result = $this->_client->receiverUpdate($this->_apiKey, $listId, array('email' => $email, 'orders' => $orderInfo));
         Mage::helper("crconnect")->log("CALL receiverAddOrder: ".$email);    
         Mage::helper("crconnect")->log($orderInfo);    
         Mage::helper("crconnect")->log($result);    
